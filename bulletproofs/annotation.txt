@@ -1,0 +1,68 @@
+1. p256.MapToGroup() :输入为字符串，输出为椭圆曲线点。 实现哈希到点运算，即使用一个哈希函数对输入数据进行处理，得到一个随机但固定长度的输出值。接着，通过一系列复杂的算法计算出一个椭圆曲线上的点，使得该点的 x 坐标等于哈希值，同时满足椭圆曲线方程。
+这个过程可以保证生成的点是随机而不可预测的，从而提供了一定的安全性。
+
+2. strconv.FormatInt():
+       func FormatInt(i int64, base int) string： 将base进制数i变成英文字符串
+
+3. SetInfinity：
+       设置为无穷远点
+
+4. hashIP：
+       func hashIP(g, h []*p256.P256, P *p256.P256, c *big.Int, n int64) (*big.Int, error)   使用sha256计算哈希值
+
+5. FromByteArray():
+        func FromByteArray(bytesIn []byte) (*big.Int, error):将byte数组转为一个大整数
+
+
+
+
+6. ScalarMult();    数和点进行乘，也是点进行指数运算
+         func (p *P256) ScalarMult(a *P256, n *big.Int) *P256 ： 点的标量乘法
+
+7. Multiply ：   点和点乘法
+         func (p *P256) Multiply(a, b *P256) *P256
+
+8. ScalarProduct： 点的内积
+
+12.VectorECAdd：   点的哈达玛积
+
+
+
+
+9. VectorExp   【util里的】 计算向量和向量的指数运算   g[n':]^(a[:n'])  a[i]^b[i]
+          func VectorExp(a []*p256.P256, b []*big.Int) (*p256.P256, error)
+
+11.  vectorScalarExp： 【自己定义的】  计算向量和数的指数运算  g[n':]^(x)， a[i]^b 计算a[i]向量中每个i的b次幂
+          func vectorScalarExp(a []*p256.P256, b *big.Int) []*p256.P256
+
+10. ModInverse:  中国剩余定理中的模反元素求解方法，简单来说就是求逆元
+                 模反元素 模数下的逆元，即满足 x^(n-1) ≡ 1 (mod n) 的整数 x
+           func ModInverse(base *big.Int, modulo *big.Int) *big.Int
+
+13. IsPowerOfTwo  是否是偶数
+                  func IsPowerOfTwo(x int64) bool
+
+14. ScalarBaseMult 将椭圆曲线上的基点乘以给定的整数值
+           func (p *P256) ScalarBaseMult(n *big.Int) *P256
+
+15.  commitG1: pederson生成器  c = g^x.h^r
+
+16. Decompose：
+            func Decompose(x *big.Int, u int64, l int64) ([]int64, error)
+    该函数的目的是将大整数x分解为基于u的l位数字。它通过重复使用 x 模 u来获取最低有效位，并将其添加到结果切片中，
+    然后通过将x除以u来从x中移除该数字。这个过程重复l次直到获得所有的l位数字。
+
+17. computeAR   aR = aL - 1^n
+            func computeAR(x []int64) ([]int64, error)
+
+18. commitVector   对比特位的秘密向量进行承诺
+
+19. sampleRandomVector  生成随机向量
+
+20. commitVectorBig    将int类型的数组转换为big类型
+
+21. VectorCopy：  将目标数变成n位向量
+             func VectorCopy(a *big.Int, n int64) ([]*big.Int, error)
+
+22.powerOf :    由x的幂组成的向量
+
